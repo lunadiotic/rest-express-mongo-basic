@@ -23,6 +23,18 @@ app.get('/api/books', (req, res) => {
     res.send(books)
 })
 
+app.get('/api/books/:id', (req, res) => {
+    const book = books.find(book => {
+        return book.id === parseInt(req.params.id)
+    })
+
+    if (!book) {
+        res.status(404).send('resource is not found!')
+    }
+    
+    res.send(book)
+})
+
 console.log('App start in: 3000')
 
 app.listen(3000)
