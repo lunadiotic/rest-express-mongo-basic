@@ -40,8 +40,33 @@ app.post('/api/books', (req, res) => {
         id: books.length+1,
         title: req.body.title
     }
-    books.push(book)
+    books.push({
+        book: book,
+        books: books
+    })
     res.status(201).send(book)
+})
+
+app.put('/api/books/:id', (req, res) => {
+    const book = books.find(book => book.id === parseInt(req.params.id))
+    if (!book) res.status(404).send('resource is not found!')
+
+    book.title = req.body.title
+
+    res.send({
+        book: book,
+        books: books
+    })
+})
+
+app.delete('/api/books/:id', (req, res) => {
+    const book = books.find(book => book.id === parseInt(req.params.id))
+    if (!book) res.status(404).send('resource is not found!')
+
+    const index = books.indexOf(book)
+    books.splice(index, 1)
+
+    res.send(books)
 })
 
 console.log('App start in: 3000')
