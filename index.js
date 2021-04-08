@@ -31,8 +31,17 @@ app.get('/api/books/:id', (req, res) => {
     if (!book) {
         res.status(404).send('resource is not found!')
     }
-    
+
     res.send(book)
+})
+
+app.post('/api/books', (req, res) => {
+    const book = {
+        id: books.length+1,
+        title: req.body.title
+    }
+    books.push(book)
+    res.status(201).send(book)
 })
 
 console.log('App start in: 3000')
