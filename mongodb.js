@@ -9,6 +9,15 @@ app.get('/', (req, res) => {
     res.send('Welcome to MongoDB API')
 })
 
+app.get('/api/books', (req, res) => {
+    database.collection('books')
+        .find({})
+        .toArray((error, result) => {
+            if(error) throw error
+            res.send(result)
+        })
+})
+
 app.listen(3000, () => {
     MongoClient.connect('mongodb://localhost:27017', {
         useUnifiedTopology: true
